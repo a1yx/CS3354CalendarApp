@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Date;
@@ -9,8 +10,12 @@ import javax.crypto.spec.PBEKeySpec;
  * Message Class --> Used to shuttle information between the server and the application
  * Holds the actual message, which usually has multiple parts, the user that sent the message, and the hashed SHA-512 password of the person
  */
-public class Message {
+public class Message implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2527284973679946938L;
 	String msg;
 	String usr;
 	String hash;
@@ -25,7 +30,7 @@ public class Message {
 		this.sentTime = new Date();
 		
 		try{
-			//Creates a hash made up of the contents of the message and its timestamp
+			//Creates a hash made up of the contents of the message and its timestamp, the server checks against this to ensure the message was complete
 			char[] msgChars = msg.toCharArray();
 			char[] usrChars = usr.toCharArray();
 			char[] hashChars = hash.toCharArray();
