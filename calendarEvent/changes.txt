@@ -1,0 +1,16 @@
+Moved files into it's own folder. I took up the whole root. oops.
+
+Changes:
+New layout using TableLayout (still incomplete).
+Renamed objects for readability, such as strings.
+Implemented file writing.
+Created and implemented string tokenizer.
+
+Untested:
+Calendar.csv is set to be overwritten or appended?
+Calendar.csv remains after app is closed?
+
+Coded but not implemented:
+File reading
+Update existing values
+Editing an existing event
