@@ -1,6 +1,8 @@
 package com.example.kevin.calendarapp;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -90,6 +92,8 @@ public class calendarEvent extends Activity {
 				((EditText)findViewById(R.id.startDate_edit)).setText(startDate);
 				((EditText)findViewById(R.id.endDate_edit)).setText(endDate);
 				((EditText)findViewById(R.id.category_edit)).setText(category);
+
+                syncCalendar(file);
 				
 				/* 
 				 * This uses the calendar provider directly. uncomment to test
@@ -191,4 +195,13 @@ public class calendarEvent extends Activity {
 		category = "1 " + tokenizer.next();
 		*/
 	}
+
+    public void syncCalendar(File file) {
+        try {
+            URL url = new URL("http://calendarse-maveptp.rhcloud.com/serv.j");
+            
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
 }
