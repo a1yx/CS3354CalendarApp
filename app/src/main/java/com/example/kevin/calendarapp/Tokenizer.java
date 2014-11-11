@@ -1,4 +1,4 @@
-package com.example.calendarevent2;
+package com.example.kevin.calendarapp;
 
 public class Tokenizer {
 	private String string;

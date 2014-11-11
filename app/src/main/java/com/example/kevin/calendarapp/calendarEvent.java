@@ -1,9 +1,9 @@
-package com.example.calendarevent2;
+package com.example.kevin.calendarapp;
 
 import java.io.*;
 import java.util.Calendar;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CalendarEvent extends ActionBarActivity {
+public class calendarEvent extends Activity {
 	
 	// Set up all default values
 	Button submitButton;
@@ -144,7 +144,7 @@ public class CalendarEvent extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.calendar_event, menu);
+		getMenuInflater().inflate(R.menu.menu_calendar_event, menu);
 		return true;
 	}
 
