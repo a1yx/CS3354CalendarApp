@@ -1,3 +1,5 @@
+package com.example.kevin.calendarapp;
+
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;

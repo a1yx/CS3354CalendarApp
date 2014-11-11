@@ -3,6 +3,7 @@ package com.example.kevin.calendarapp;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -12,6 +13,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.view.Menu;
@@ -198,9 +200,29 @@ public class calendarEvent extends Activity {
 
     public void syncCalendar(File file) {
         try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
             URL url = new URL("http://calendarse-maveptp.rhcloud.com/serv.j");
-            
-        } catch (MalformedURLException e) {
+            URLConnection connection = url.openConnection();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            Message sent = new Message("sync", "Maverick", "pass");
+
+            ObjectOutputStream output = new ObjectOutputStream(connection.getOutputStream());
+
+            output.writeObject(sent);
+            output.close();
+
+            ObjectInputStream input = new ObjectInputStream(connection.getInputStream());
+
+            Message strs = (Message)input.readObject();
+            String success = strs.getMessage();
+            input.close();
+            System.out.println(success);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
