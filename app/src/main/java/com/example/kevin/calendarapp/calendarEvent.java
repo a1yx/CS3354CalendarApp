@@ -38,7 +38,9 @@ public class calendarEvent extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_calendar_event);
-		submitButton = (Button) findViewById(R.id.submit_button);
+        submitButton = (Button)findViewById(R.id.submit_button);
+
+        Intent intent = getIntent();
 		
 		// Set listener for the submit button
 		submitButton.setOnClickListener(new View.OnClickListener() {
@@ -59,13 +61,13 @@ public class calendarEvent extends Activity {
 				try {
 					FileOutputStream ofile = new FileOutputStream(file);
 					OutputStreamWriter writer = new OutputStreamWriter(ofile);
-					
+
 					try {
-						fileWrite(writer);
+						newEvent(writer);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
+
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -167,7 +169,7 @@ public class calendarEvent extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public void fileWrite(OutputStreamWriter writer) throws IOException {
+	public void newEvent(OutputStreamWriter writer) throws IOException {
 		// Write all values to a csv file. Separated for readability
 		writer.write(name + "," + description + "," + location + ",");
 		writer.write(startTime + "," + endTime + ",");
@@ -185,7 +187,7 @@ public class calendarEvent extends Activity {
 
 		/*
 		 * Uncomment this to debug file reading
-		 * 
+		 *
 		//Uses the Tokenizer class to separate the input line into the values
 		name = "1 " + tokenizer.next();
 		description = "1 " + tokenizer.next();
@@ -196,6 +198,7 @@ public class calendarEvent extends Activity {
 		endDate = "1 " + tokenizer.next();
 		category = "1 " + tokenizer.next();
 		*/
+        reader.close();
 	}
 
     public void syncCalendar(File file) {
