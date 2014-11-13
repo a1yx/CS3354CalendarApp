@@ -9,6 +9,8 @@ package com.example.kevin.calendarapp;
         import android.os.Bundle;
         import android.view.Menu;
         import android.view.MenuItem;
+        import android.view.View;
+        import android.widget.Button;
         import android.widget.CalendarView;
         import android.widget.CalendarView.OnDateChangeListener;
         import android.widget.Toast;
@@ -19,6 +21,7 @@ package com.example.kevin.calendarapp;
 public class Monthly_View_Example extends Activity {
     CalendarView calendar;
     Context context = this;
+    Button viewsButton, searchButton, agendaButton, addButton, settingsButton;
     public final static String monthFinal = "com.example.kevin.calendarap.monthString";
     public final static String dayFinal = "com.example.kevin.calendarapp.dayString";
     public final static String yearFinal = "com.example.kevin.calendarapp.yearString";
@@ -31,6 +34,11 @@ public class Monthly_View_Example extends Activity {
         setContentView(R.layout.activity_monthly_view_example);
 
         //initializes the calendarview
+        viewsButton = (Button) findViewById(R.id.change_views);
+        searchButton = (Button) findViewById(R.id.search);
+        agendaButton = (Button) findViewById(R.id.agenda);
+        addButton = (Button) findViewById(R.id.add_event);
+        settingsButton = (Button) findViewById(R.id.settings);
         initializeCalendar();
     }
 
@@ -78,7 +86,6 @@ public class Monthly_View_Example extends Activity {
         //sets the color for the vertical bar shown at the beginning and at the end of the selected date.
         calendar.setSelectedDateVerticalBar(R.color.pink);
 
-
         //**This has an OBOB error for month (month is month -1) -- gauche fix
         //sets the listener to be notified upon selected date change.
         calendar.setOnDateChangeListener(new OnDateChangeListener() {
@@ -99,10 +106,21 @@ public class Monthly_View_Example extends Activity {
             }
         });
 
-        //sets the listener to be notified upon selected date change
-        //then sends an intent to change to the new date view
+        initializeEditBar();
 
+    }
 
+    public void initializeEditBar() {
+        final Context context = this;
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.add_event) {
+                    Intent intent = new Intent(context, calendarEvent.class);
+                }
+            }
+        });
     }
 
     // Switch statement to convert the int value of a month to a string
