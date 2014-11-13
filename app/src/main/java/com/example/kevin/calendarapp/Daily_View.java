@@ -36,6 +36,6 @@ public class Daily_View extends Activity {
         month = intent.getStringExtra(Monthly_View_Example.monthFinal);
         day = intent.getStringExtra(Monthly_View_Example.dayFinal);
         year = intent.getStringExtra(Monthly_View_Example.yearFinal);
-        datethingy.setText(Monthly_View_Example.Months(month) + " " + day + ", " + year);
+        datethingy.setText(month + " " + day + ", " + year);
     }
 }

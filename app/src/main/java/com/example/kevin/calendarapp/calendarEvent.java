@@ -36,6 +36,7 @@ public class calendarEvent extends Activity {
 	TextView random;
 	Calendar beginEvent, endEvent;
 	long calID, eventID, startLong, endLong;
+    File file = new File(getFilesDir(), "calendar.csv");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +51,17 @@ public class calendarEvent extends Activity {
 		submitButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 
-				// Set all variable names to user input
-				name = ((EditText)findViewById(R.id.name_edit)).getText().toString();
-				description = ((EditText)findViewById(R.id.description_edit)).getText().toString();
-				location = ((EditText)findViewById(R.id.location_edit)).getText().toString();
-				startTime = ((EditText)findViewById(R.id.startTime_edit)).getText().toString();
-				endTime = ((EditText)findViewById(R.id.endTime_edit)).getText().toString();
-				startDate = ((EditText)findViewById(R.id.startDate_edit)).getText().toString();
-				endDate = ((EditText)findViewById(R.id.endDate_edit)).getText().toString();
-				category = ((EditText)findViewById(R.id.category_edit)).getText().toString();
-				File file = new File(getFilesDir(), "calendar.csv");
-
 				// Write to the calendar.csv file. WARNING: have not tested if it appends or not
                 if(uuid.isEmpty()) {
+                    name = ((EditText)findViewById(R.id.name_edit)).getText().toString();
+                    description = ((EditText)findViewById(R.id.description_edit)).getText().toString();
+                    location = ((EditText)findViewById(R.id.location_edit)).getText().toString();
+                    startTime = ((EditText)findViewById(R.id.startTime_edit)).getText().toString();
+                    endTime = ((EditText)findViewById(R.id.endTime_edit)).getText().toString();
+                    startDate = ((EditText)findViewById(R.id.startDate_edit)).getText().toString();
+                    endDate = ((EditText)findViewById(R.id.endDate_edit)).getText().toString();
+                    category = ((EditText)findViewById(R.id.category_edit)).getText().toString();
+
                     try {
                         FileOutputStream ofile = new FileOutputStream(file);
                         OutputStreamWriter writer = new OutputStreamWriter(ofile);

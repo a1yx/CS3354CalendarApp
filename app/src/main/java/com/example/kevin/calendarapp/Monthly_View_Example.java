@@ -14,13 +14,14 @@ package com.example.kevin.calendarapp;
         import android.widget.Toast;
         import android.app.Activity;
 
+        import java.io.File;
+
 public class Monthly_View_Example extends Activity {
     CalendarView calendar;
     Context context = this;
-    public final static String monthFinal = "com.example.macprojj.jcal.monthString";
-    public final static String dayFinal = "com.example.macprojj.jcal.dayString";
-    public final static String yearFinal = "com.example.macprojj.jcal.yearString";
-
+    public final static String monthFinal = "com.example.kevin.calendarap.monthString";
+    public final static String dayFinal = "com.example.kevin.calendarapp.dayString";
+    public final static String yearFinal = "com.example.kevin.calendarapp.yearString";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class Monthly_View_Example extends Activity {
                 Toast.makeText(getApplicationContext(), month + "/" + day + "/" + year, Toast.LENGTH_LONG).show();
                 Context context = calendar.getContext();
                 Intent intent = new Intent(context, Daily_View.class);
-                String monthString = month + "";
+                String monthString = Months(month);
                 intent.putExtra(monthFinal, monthString);
                 String dayString = day + "";
                 intent.putExtra(dayFinal, dayString);
