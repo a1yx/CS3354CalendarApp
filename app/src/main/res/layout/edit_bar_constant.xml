@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Views"
+        android:layout_weight="1"
         android:id="@+id/change_views" />
 
     <Button
@@ -17,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search"
+        android:layout_weight="1"
         android:id="@+id/search" />
 
     <Button
@@ -24,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agenda"
+        android:layout_weight="1"
         android:id="@+id/agenda" />
 
     <Button
@@ -31,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add"
+        android:layout_weight="1"
         android:id="@+id/add_event" />
 
     <Button
@@ -38,5 +42,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Setting"
+        android:layout_weight="1"
         android:id="@+id/settings" />
 </LinearLayout>
