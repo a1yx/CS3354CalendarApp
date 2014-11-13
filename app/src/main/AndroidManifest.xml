@@ -25,6 +25,12 @@
             android:label="@string/app_name">
 
         </activity>
+
+        <activity
+            android:name=".calendarEvent"
+            android:label="@string/app_name">
+
+        </activity>
     </application>
 
 </manifest>

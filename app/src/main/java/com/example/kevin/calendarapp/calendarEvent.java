@@ -36,7 +36,6 @@ public class calendarEvent extends Activity {
 	TextView random;
 	Calendar beginEvent, endEvent;
 	long calID, eventID, startLong, endLong;
-    File file = new File(getFilesDir(), "calendar.csv");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +45,7 @@ public class calendarEvent extends Activity {
         cancelButton = (Button)findViewById(R.id.cancel_button);
 
         Intent intent = getIntent();
+        final Uri fileUri = Uri.parse(intent.getExtras().getString("fileUri"));
 		
 		// Set listener for the submit button
 		submitButton.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +63,7 @@ public class calendarEvent extends Activity {
                     category = ((EditText)findViewById(R.id.category_edit)).getText().toString();
 
                     try {
+                        File file = new File(fileUri.getPath());
                         FileOutputStream ofile = new FileOutputStream(file);
                         OutputStreamWriter writer = new OutputStreamWriter(ofile);
 
@@ -79,6 +80,7 @@ public class calendarEvent extends Activity {
                 // Completely untested
                 else {
                     try {
+                        File file = new File(fileUri.getPath());
                         FileOutputStream ofile = new FileOutputStream(file);
                         OutputStreamWriter writer = new OutputStreamWriter(ofile);
                         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -96,6 +98,7 @@ public class calendarEvent extends Activity {
 
 				// Read the file back. To be implemented more fully later
 				try {
+                    File file = new File(fileUri.getPath());
 					BufferedReader reader = new BufferedReader(new FileReader(file));
 
 					try {
