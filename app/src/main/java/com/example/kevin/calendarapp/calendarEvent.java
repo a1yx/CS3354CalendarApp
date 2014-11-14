@@ -67,6 +67,10 @@ public class calendarEvent extends Activity {
                 endDate = ((EditText)findViewById(R.id.endDate_edit)).getText().toString();
                 category = ((EditText)findViewById(R.id.category_edit)).getText().toString();
 
+                if(description.isEmpty()) description = "No Description";
+                if(location.isEmpty()) location = "Not Specified";
+                if(category.isEmpty()) category = "None";
+
 				// Adds an event to calendar.csv
                 if(uuid.isEmpty()) {
                     try {
@@ -203,7 +207,7 @@ public class calendarEvent extends Activity {
 		// Display a little bubble to notify the user of the save
 		Toast.makeText(getBaseContext(), "Event Saved", Toast.LENGTH_LONG).show();
         syncCalendar(0,uuid + "," + name + "," + description + "," + location +
-                "," + startTime + "," + endTime + " " + startDate + "," + endDate + "," + category);
+                "," + startTime + "," + endTime + "," + startDate + "," + endDate + "," + category);
 
     }
 
@@ -299,19 +303,20 @@ public class calendarEvent extends Activity {
 
             //Will add an event to the database
             if(type == 0) {
-                message = " ADD," + s;
+                message = " ADD," + id + "," + s;
                 output.write(message.getBytes());
                 output.close();
 
                 InputStream input = connection.getInputStream();
                 t = new byte[input.available()];
                 input.read(t);
+                System.out.println(new String(t));
                 input.close();
             }
 
             //Will delete an event from the database
             else if(type == 1){
-                message = " REMOVE," + s;
+                message = " REMOVE," + id + "," + s;
                 output.write(message.getBytes());
                 output.close();
 
@@ -323,7 +328,7 @@ public class calendarEvent extends Activity {
 
             //Will edit an existing event
             else if(type == 2){
-                message = " EDIT," + s;
+                message = " EDIT," + id + "," + s;
                 output.write(message.getBytes());
                 output.close();
 
