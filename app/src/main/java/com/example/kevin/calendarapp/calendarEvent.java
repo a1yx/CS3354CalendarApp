@@ -1,31 +1,37 @@
 package com.example.kevin.calendarapp;
 
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Calendar;
-import java.util.UUID;
-
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.provider.CalendarContract;
-import android.provider.CalendarContract.Events;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Calendar;
+import java.util.UUID;
 
 public class calendarEvent extends Activity {
 	
@@ -47,6 +53,7 @@ public class calendarEvent extends Activity {
         Intent intent = getIntent();
         final Uri fileUri = Uri.parse(intent.getExtras().getString("fileUri"));
         final File file = new File(fileUri.getPath());
+
 		
 		// Set listener for the submit button
 		submitButton.setOnClickListener(new View.OnClickListener() {
@@ -107,8 +114,6 @@ public class calendarEvent extends Activity {
 				}
 
                 calendarEvent.this.finish();
-
-                //syncCalendar(file);
 
 				/*
 				 * This uses the calendar provider directly. uncomment to test
@@ -197,7 +202,10 @@ public class calendarEvent extends Activity {
 		writer.close();
 		// Display a little bubble to notify the user of the save
 		Toast.makeText(getBaseContext(), "Event Saved", Toast.LENGTH_LONG).show();
-	}
+        syncCalendar(0,uuid + "," + name + "," + description + "," + location +
+                "," + startTime + "," + endTime + " " + startDate + "," + endDate + "," + category);
+
+    }
 
     public void editEvent(BufferedReader reader, File file)
             throws IOException {
@@ -265,29 +273,67 @@ public class calendarEvent extends Activity {
         reader.close();
 	}
 
-    public void syncCalendar(File file) {
+    public void syncCalendar(int type, String s) {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            URL url = new URL("http://calendarse-maveptp.rhcloud.com/serv.j");
-            URLConnection connection = url.openConnection();
+            String id = Build.BOARD + Build.BOOTLOADER + Build.ID + Build.SERIAL;
+            id = new String(Hex.encodeHex(DigestUtils.sha(id)));
+
+            System.out.println(id);
+
+            //Opens a connection to the server
+            URL u = new URL("http://calendarse-maveptp.rhcloud.com/serv.j");
+            URLConnection connection = u.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
-            Message sent = new Message("sync", "Maverick", "pass");
+            OutputStream output = connection.getOutputStream();
 
-            ObjectOutputStream output = new ObjectOutputStream(connection.getOutputStream());
+            //Byte array for return message from server
+            byte[] t = null;
 
-            output.writeObject(sent);
-            output.close();
+            //Holds message to be sent to server
+            String message = null;
 
-            ObjectInputStream input = new ObjectInputStream(connection.getInputStream());
+            //Will add an event to the database
+            if(type == 0) {
+                message = " ADD," + s;
+                output.write(message.getBytes());
+                output.close();
 
-            Message strs = (Message)input.readObject();
-            String success = strs.getMessage();
-            input.close();
-            System.out.println(success);
+                InputStream input = connection.getInputStream();
+                t = new byte[input.available()];
+                input.read(t);
+                input.close();
+            }
+
+            //Will delete an event from the database
+            else if(type == 1){
+                message = " REMOVE," + s;
+                output.write(message.getBytes());
+                output.close();
+
+                InputStream input = connection.getInputStream();
+                t = new byte[input.available()];
+                input.read(t);
+                input.close();
+            }
+
+            //Will edit an existing event
+            else if(type == 2){
+                message = " EDIT," + s;
+                output.write(message.getBytes());
+                output.close();
+
+                InputStream input = connection.getInputStream();
+                t = new byte[input.available()];
+                input.read(t);
+                input.close();
+            }
+
+            //System.out.println(new String(t));
 
         } catch (Exception e) {
             e.printStackTrace();
