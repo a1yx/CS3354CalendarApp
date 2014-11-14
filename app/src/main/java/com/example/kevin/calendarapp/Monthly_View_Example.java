@@ -75,16 +75,16 @@ public class Monthly_View_Example extends Activity {
         calendar.setFirstDayOfWeek(2);
 
         //The background color for the selected week.
-        calendar.setSelectedWeekBackgroundColor(getResources().getColor(R.color.white));
+        //calendar.setSelectedWeekBackgroundColor(getResources().getColor(R.color.white));
 
         //sets the color for the dates of an unfocused month.
-        calendar.setUnfocusedMonthDateColor(getResources().getColor(R.color.transparent));
+        //calendar.setUnfocusedMonthDateColor(getResources().getColor(R.color.transparent));
 
         //sets the color for the separator line between weeks.
-        calendar.setWeekSeparatorLineColor(getResources().getColor(R.color.transparent));
+        //calendar.setWeekSeparatorLineColor(getResources().getColor(R.color.transparent));
 
         //sets the color for the vertical bar shown at the beginning and at the end of the selected date.
-        calendar.setSelectedDateVerticalBar(R.color.pink);
+        //calendar.setSelectedDateVerticalBar(R.color.pink);
 
         //**This has an OBOB error for month (month is month -1) -- gauche fix
         //sets the listener to be notified upon selected date change.
