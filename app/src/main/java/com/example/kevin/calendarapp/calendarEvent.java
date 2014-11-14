@@ -51,7 +51,6 @@ public class calendarEvent extends Activity {
 		// Set listener for the submit button
 		submitButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-
                 name = ((EditText)findViewById(R.id.name_edit)).getText().toString();
                 description = ((EditText)findViewById(R.id.description_edit)).getText().toString();
                 location = ((EditText)findViewById(R.id.location_edit)).getText().toString();
@@ -162,9 +161,7 @@ public class calendarEvent extends Activity {
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(context, calendarEvent.class);
-                intent.putExtra(uuid, uuid);
-                startActivity(intent);
+                Toast.makeText(getBaseContext(), "Event Not Saved", Toast.LENGTH_LONG).show();
                 calendarEvent.this.finish();
             }
         });

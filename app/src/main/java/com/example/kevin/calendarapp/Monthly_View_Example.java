@@ -26,7 +26,7 @@ public class Monthly_View_Example extends Activity {
     public final static String monthFinal = "com.example.kevin.calendarap.monthString";
     public final static String dayFinal = "com.example.kevin.calendarapp.dayString";
     public final static String yearFinal = "com.example.kevin.calendarapp.yearString";
-    Uri fileUri;
+    public Uri fileUri;
     File file;
 
     @Override
@@ -37,11 +37,6 @@ public class Monthly_View_Example extends Activity {
         setContentView(R.layout.activity_monthly_view_example);
 
         //initializes the calendarview
-        viewsButton = (Button) findViewById(R.id.change_views);
-        searchButton = (Button) findViewById(R.id.search);
-        agendaButton = (Button) findViewById(R.id.agenda);
-        addButton = (Button) findViewById(R.id.add_event);
-        settingsButton = (Button) findViewById(R.id.settings);
         file = new File(context.getFilesDir(), "calendar.csv");
         fileUri = Uri.fromFile(file);
         initializeCalendar();
@@ -107,6 +102,8 @@ public class Monthly_View_Example extends Activity {
                 intent.putExtra(dayFinal, dayString);
                 String yearString = year + "";
                 intent.putExtra(yearFinal, yearString);
+                intent.putExtra("fileUri", fileUri.toString());
+
                 startActivity(intent);
             }
         });
@@ -117,6 +114,11 @@ public class Monthly_View_Example extends Activity {
 
     public void initializeEditBar() {
         final Context context = this;
+        viewsButton = (Button) findViewById(R.id.change_views);
+        searchButton = (Button) findViewById(R.id.search);
+        agendaButton = (Button) findViewById(R.id.agenda);
+        addButton = (Button) findViewById(R.id.add_event);
+        settingsButton = (Button) findViewById(R.id.settings);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
