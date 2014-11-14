@@ -27,6 +27,7 @@ public class Monthly_View_Example extends Activity {
     public final static String dayFinal = "com.example.kevin.calendarapp.dayString";
     public final static String yearFinal = "com.example.kevin.calendarapp.yearString";
     Uri fileUri;
+    File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class Monthly_View_Example extends Activity {
         agendaButton = (Button) findViewById(R.id.agenda);
         addButton = (Button) findViewById(R.id.add_event);
         settingsButton = (Button) findViewById(R.id.settings);
-        final File file = new File(context.getFilesDir(), "calendar.csv");
+        file = new File(context.getFilesDir(), "calendar.csv");
         fileUri = Uri.fromFile(file);
         initializeCalendar();
     }
