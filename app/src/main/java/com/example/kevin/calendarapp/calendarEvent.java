@@ -320,7 +320,11 @@ public class calendarEvent extends Activity {
                 input.close();
             }
 
-            //Will delete an event from the database
+            /*
+            *    Will delete an event from the database
+            *    When implementing, just pass in the UUID of the event as a string, and the
+            *    Servlet will take care of the rest.
+            */
             else if(type == 1){
                 message = " REMOVE," + id + "," + s;
                 output.write(message.getBytes());
@@ -332,7 +336,7 @@ public class calendarEvent extends Activity {
                 input.close();
             }
 
-            //Will edit an existing event
+            //Will edit an existing event, for the string, please pass in all the fields for the event, use the same UUID as before
             else if(type == 2){
                 message = " EDIT," + id + "," + s;
                 output.write(message.getBytes());
