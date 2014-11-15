@@ -71,6 +71,12 @@ public class calendarEvent extends Activity {
                 if(location.isEmpty()) location = "Not Specified";
                 if(category.isEmpty()) category = "None";
 
+                if(name.isEmpty()){((EditText)findViewById(R.id.name_edit)).setText("Name Required".toCharArray(),0,12); return; }
+                if(startTime.isEmpty()){((EditText) findViewById(R.id.startTime_edit)).setText("Start Time Required".toCharArray(),0,19); return; }
+                if(endTime.isEmpty()){((EditText)findViewById(R.id.endTime_edit)).setText("End Time Required".toCharArray(),0,17); return; }
+                if(startDate.isEmpty()){((EditText) findViewById(R.id.startDate_edit)).setText("Start Date Required".toCharArray(),0,19); return; }
+                if(endDate.isEmpty()){((EditText)findViewById(R.id.endDate_edit)).setText("End Date Required".toCharArray(),0,17); return; }
+
 				// Adds an event to calendar.csv
                 if(uuid.isEmpty()) {
                     try {
