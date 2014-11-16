@@ -126,7 +126,7 @@ public class Monthly_View_Example extends Activity {
                 if(view.getId() == R.id.add_event) {
                     Intent intent = new Intent(context, calendarEvent.class);
                     intent.putExtra("fileUri", fileUri.toString());
-                    intent.putExtra("Event", "");
+                    intent.putExtra("Event","");
                     startActivity(intent);
                 }
             }

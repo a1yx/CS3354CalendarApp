@@ -47,7 +47,7 @@ public class calendarEvent extends Activity {
 
         Intent intent = getIntent();
 
-        if(intent.getExtras().getString("Event") != ""){
+        if(!intent.getExtras().getString("Event").equals("")){
             String[] event = intent.getExtras().getString("Event").split(",");
             ((EditText)findViewById(R.id.name_edit)).setText(event[0]);
             ((EditText)findViewById(R.id.description_edit)).setText(event[1]);
