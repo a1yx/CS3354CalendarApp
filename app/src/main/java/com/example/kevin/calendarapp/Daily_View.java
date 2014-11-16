@@ -4,15 +4,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ListView;
 
-import com.example.kevin.calendarapp.R;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.Date;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 
 /**
  * Created by MacProJJ on 11/12/14.
@@ -20,6 +28,8 @@ import java.util.Date;
 public class Daily_View extends Activity {
 
     Button viewsButton, searchButton, agendaButton, addButton, settingsButton;
+    ListView list;
+    ArrayList<String> items;
     EditText datethingy;
 
     @Override
@@ -32,6 +42,8 @@ public class Daily_View extends Activity {
         Intent intent = getIntent();
 
         datethingy = (EditText) findViewById(R.id.daily_date);
+        list = (ListView)findViewById(R.id.eventList);
+        items = new ArrayList<String>();
 
         initializeDaily(datethingy, intent);
     }
@@ -42,6 +54,51 @@ public class Daily_View extends Activity {
         day = intent.getStringExtra(Monthly_View_Example.dayFinal);
         year = intent.getStringExtra(Monthly_View_Example.yearFinal);
         datethingy.setText(month + " " + day + ", " + year);
+
+        String request = (getMonth(month) + "/" + day + "/" + year);
+
+        String id = Build.BOARD + Build.BOOTLOADER + Build.ID + Build.SERIAL;
+        id = new String(Hex.encodeHex(DigestUtils.sha(id)));
+        String message = " DOWNLOAD," + id;
+
+        try {
+            URL u = new URL("http://calendarse-maveptp.rhcloud.com/serv.j");
+            URLConnection connection = u.openConnection();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            OutputStream output = connection.getOutputStream();
+            byte[] t = null;
+
+            output.write(message.getBytes());
+            output.close();
+
+            InputStream input = connection.getInputStream();
+            t = new byte[input.available()];
+            input.read(t);
+
+            String[] response = new String(t).split("\n");
+            ArrayList<Button> eventList = new ArrayList<Button>();
+            items = new ArrayList<String>();
+
+            for (String str : response) {
+                String[] others = str.split(",");
+                if(StringUtils.containsIgnoreCase(others[5], request)){
+                    Button added = new Button(this);
+                    added.setText(others[0] + " - " + others[3] + "-" + others[4]);
+                    eventList.add(added);
+                    items.add(str);
+                }
+                System.out.println(str);
+            }
+
+            ArrayAdapter adapter = new ArrayAdapter<Button>(this, R.layout.row, eventList);
+            list.setAdapter(adapter);
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         initializeEditBar(intent);
     }
 
@@ -60,9 +117,25 @@ public class Daily_View extends Activity {
                 if(view.getId() == R.id.add_event) {
                     Intent intent = new Intent(context, calendarEvent.class);
                     intent.putExtra("fileUri", fileUri.toString());
+                    intent.putExtra("Event","");
                     startActivity(intent);
                 }
             }
         });
+    }
+
+    public String getMonth(String m){
+        if(m.equals("January")) return "1";
+        if(m.equals("February")) return "2";
+        if(m.equals("March")) return "3";
+        if(m.equals("April")) return "4";
+        if(m.equals("May")) return "5";
+        if(m.equals("June")) return "6";
+        if(m.equals("July")) return "7";
+        if(m.equals("August")) return "8";
+        if(m.equals("September")) return "9";
+        if(m.equals("October")) return "10";
+        if(m.equals("November")) return "11";
+        else{ return "12"; }
     }
 }
