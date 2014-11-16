@@ -3,7 +3,6 @@ package com.example.kevin.calendarapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -18,16 +17,8 @@ import android.widget.Toast;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
@@ -37,11 +28,12 @@ public class calendarEvent extends Activity {
 	
 	// Set up all default values
     private static Context context;
-	Button submitButton, cancelButton;
+	Button submitButton, cancelButton, deleteButton;
 	String uuid = "", name, description, location, startTime, endTime, startDate, endDate, category;
 	TextView random;
 	Calendar beginEvent, endEvent;
 	long calID, eventID, startLong, endLong;
+    int kind;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +41,39 @@ public class calendarEvent extends Activity {
 		setContentView(R.layout.activity_calendar_event);
         submitButton = (Button)findViewById(R.id.submit_button);
         cancelButton = (Button)findViewById(R.id.cancel_button);
+        deleteButton = (Button)findViewById(R.id.delete_button);
+
+        kind = 0;
 
         Intent intent = getIntent();
-        final Uri fileUri = Uri.parse(intent.getExtras().getString("fileUri"));
-        final File file = new File(fileUri.getPath());
 
-		
+        if(intent.getExtras().getString("Event") != ""){
+            String[] event = intent.getExtras().getString("Event").split(",");
+            ((EditText)findViewById(R.id.name_edit)).setText(event[0]);
+            ((EditText)findViewById(R.id.description_edit)).setText(event[1]);
+            ((EditText)findViewById(R.id.location_edit)).setText(event[2]);
+            ((EditText)findViewById(R.id.startTime_edit)).setText(event[3]);
+            ((EditText)findViewById(R.id.endTime_edit)).setText(event[4]);
+            ((EditText)findViewById(R.id.startDate_edit)).setText(event[5]);
+            ((EditText)findViewById(R.id.endDate_edit)).setText(event[6]);
+            ((EditText)findViewById(R.id.category_edit)).setText(event[7]);
+            uuid = event[8];
+            kind = 1;
+        }
+
+        deleteButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                if(kind == 0){
+                    Toast.makeText(getBaseContext(), "Cannot Delete Event, Doesn't Exist Yet", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    syncCalendar(2, uuid);
+                    Toast.makeText(getBaseContext(), "Event Deleted", Toast.LENGTH_LONG).show();
+                    calendarEvent.this.finish();
+                }
+            }
+        });
+
 		// Set listener for the submit button
 		submitButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -77,51 +96,13 @@ public class calendarEvent extends Activity {
                 if(startDate.isEmpty()){((EditText) findViewById(R.id.startDate_edit)).setText("Start Date Required".toCharArray(),0,19); return; }
                 if(endDate.isEmpty()){((EditText)findViewById(R.id.endDate_edit)).setText("End Date Required".toCharArray(),0,17); return; }
 
-				// Adds an event to calendar.csv
-                if(uuid.isEmpty()) {
-                    try {
-                        FileOutputStream ofile = new FileOutputStream(file);
-                        OutputStreamWriter writer = new OutputStreamWriter(ofile);
-
-                        try {
-                            newEvent(writer);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-                // Edits an event in calendar.csv
-                else {
-                    try {
-                        BufferedReader reader = new BufferedReader(new FileReader(file));
-
-                        try {
-                            editEvent(reader, file);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                if(uuid.isEmpty()){
+                    uuid = UUID.randomUUID().toString();
                 }
 
-				// Read the file back. To be implemented more fully later
-				try {
-					BufferedReader reader = new BufferedReader(new FileReader(file));
-
-					try {
-						fileRead(reader);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
+                Toast.makeText(getBaseContext(), "Event Saved", Toast.LENGTH_LONG).show();
+                syncCalendar(kind,uuid + "," + name + "," + description + "," + location +
+                        "," + startTime + "," + endTime + "," + startDate + "," + endDate + "," + category);
 
                 calendarEvent.this.finish();
 
@@ -201,87 +182,6 @@ public class calendarEvent extends Activity {
 		
 		return super.onOptionsItemSelected(item);
 	}
-	
-	public void newEvent(OutputStreamWriter writer) throws IOException {
-		// Write all values to a csv file. Separated for readability
-        uuid = UUID.randomUUID().toString();
-        writer.write(uuid + "," + name + "," + description + "," + location + ",");
-		writer.write(startTime + "," + endTime + ",");
-		writer.write(startDate + "," + endDate + "," + category + '\n');
-		writer.flush();
-		writer.close();
-		// Display a little bubble to notify the user of the save
-		Toast.makeText(getBaseContext(), "Event Saved", Toast.LENGTH_LONG).show();
-        syncCalendar(0,uuid + "," + name + "," + description + "," + location +
-                "," + startTime + "," + endTime + "," + startDate + "," + endDate + "," + category);
-
-    }
-
-    public void editEvent(BufferedReader reader, File file)
-            throws IOException {
-        // Write all values to a csv file. Separated for readability
-        String line;
-        File tempFile = new File(getFilesDir(), "temp.csv");
-        FileOutputStream ostream = new FileOutputStream(tempFile);
-        OutputStreamWriter tempWriter = new OutputStreamWriter(ostream);
-        Tokenizer tokenizer = new Tokenizer();
-
-        while((line = reader.readLine()) != null) {
-            tokenizer.setString(line);
-
-            if(tokenizer.next().compareTo(uuid.toString()) == 0) {
-                tempWriter.write(UUID.randomUUID().toString() + ",");
-                tempWriter.write(name + "," + description + "," + location + ",");
-                tempWriter.write(startTime + "," + endTime + ",");
-                tempWriter.write(startDate + "," + endDate + "," + category + '\n');
-            }
-
-            else {
-                tempWriter.write(line);
-            }
-            System.out.println(line);
-        }
-
-        // Display a little bubble to notify the user of the save
-        Toast.makeText(getBaseContext(), "Event Saved", Toast.LENGTH_LONG).show();
-        tempWriter.flush();
-        tempWriter.close();
-
-        BufferedReader tempReader = new BufferedReader(new FileReader(tempFile));
-        FileWriter writer = new FileWriter(file, false);
-
-        while((line = tempReader.readLine())!=null) {
-            System.out.println(line);
-            writer.write(line + '\n');
-        }
-
-        writer.flush();
-        writer.close();
-        tempReader.close();
-        tempFile.delete();
-    }
-	
-	public void fileRead(BufferedReader reader) throws IOException {
-		String line;
-		line = reader.readLine();
-		Tokenizer tokenizer = new Tokenizer(line);
-
-		/*
-		 * Uncomment this to debug file reading
-		 *
-		 */
-		//Uses the Tokenizer class to separate the input line into the values
-        uuid = tokenizer.next();
-		name = "1 " + tokenizer.next();
-		description = "1 " + tokenizer.next();
-		location = "1 " + tokenizer.next();
-		startTime = "1 " + tokenizer.next();
-		endTime = "1 " + tokenizer.next();
-		startDate = "1 " + tokenizer.next();
-		endDate = "1 " + tokenizer.next();
-		category = "1 " + tokenizer.next();
-        reader.close();
-	}
 
     public void syncCalendar(int type, String s) {
         try {
@@ -325,7 +225,7 @@ public class calendarEvent extends Activity {
             *    When implementing, just pass in the UUID of the event as a string, and the
             *    Servlet will take care of the rest.
             */
-            else if(type == 1){
+            else if(type == 2){
                 message = " REMOVE," + id + "," + s;
                 output.write(message.getBytes());
                 output.close();
@@ -337,20 +237,8 @@ public class calendarEvent extends Activity {
             }
 
             //Will edit an existing event, for the string, please pass in all the fields for the event, use the same UUID as before
-            else if(type == 2){
+            else if(type == 1){
                 message = " EDIT," + id + "," + s;
-                output.write(message.getBytes());
-                output.close();
-
-                InputStream input = connection.getInputStream();
-                t = new byte[input.available()];
-                input.read(t);
-                input.close();
-            }
-
-            //Method for downloading all the user's events, all events are downloaded at once and seperated by \n's.
-            else if(type == 3){
-                message = " DOWNLOAD," + id;
                 output.write(message.getBytes());
                 output.close();
 

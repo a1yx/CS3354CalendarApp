@@ -209,5 +209,9 @@
 
         </Button>
 
+        <Button
+            android:id="@+id/delete_button"
+            android:text="Delete" />
+
     </TableLayout>
 </ScrollView>
