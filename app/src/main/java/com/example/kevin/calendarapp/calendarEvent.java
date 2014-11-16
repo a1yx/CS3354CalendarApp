@@ -348,7 +348,17 @@ public class calendarEvent extends Activity {
                 input.close();
             }
 
-            //System.out.println(new String(t));
+            //Method for downloading all the user's events, all events are downloaded at once and seperated by \n's.
+            else if(type == 3){
+                message = " DOWNLOAD," + id;
+                output.write(message.getBytes());
+                output.close();
+
+                InputStream input = connection.getInputStream();
+                t = new byte[input.available()];
+                input.read(t);
+                input.close();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
