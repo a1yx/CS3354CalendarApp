@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -139,6 +140,15 @@ public class Daily_View extends Activity {
                     Intent intent = new Intent(getBaseContext(), Search_View.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(context, calendarEvent.class);
+                intent.putExtra("fileUri","");
+                intent.putExtra("Event",items.get(position));
+                startActivity(intent);
             }
         });
     }
