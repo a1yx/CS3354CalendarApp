@@ -3,6 +3,7 @@ package com.example.kevin.calendarapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -99,7 +100,12 @@ public class Daily_View extends Activity {
             ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.row, eventList);
             list.setAdapter(adapter);
 
+            //set color of the event
+            for(int i = 0, current; i < list.getChildCount(); i++) {
+                list.getChildAt(i).setBackgroundColor(Color.BLUE);
+            }
         }
+
         catch(Exception e){
             e.printStackTrace();
         }
