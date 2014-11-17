@@ -86,6 +86,53 @@ public class calendarEvent extends Activity {
                 endDate = ((EditText)findViewById(R.id.endDate_edit)).getText().toString();
                 category = ((EditText)findViewById(R.id.category_edit)).getText().toString();
 
+                String[] checker = startDate.split("/");
+                try {
+                    if (Integer.parseInt(checker[0]) > 12 || Integer.parseInt(checker[0]) < 1 || Integer.parseInt(checker[1]) < 1 || Integer.parseInt(checker[1]) > 31) {
+                        Toast.makeText(getBaseContext(), "Invalid Start Date", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+                catch(Exception e){
+                    Toast.makeText(getBaseContext(), "Invalid Start Date", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                checker = endDate.split("/");
+                try {
+                    if (Integer.parseInt(checker[0]) > 12 || Integer.parseInt(checker[0]) < 1 || Integer.parseInt(checker[1]) < 1 || Integer.parseInt(checker[1]) > 31) {
+                        Toast.makeText(getBaseContext(), "Invalid End Date", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+                catch(Exception e){
+                    Toast.makeText(getBaseContext(), "Invalid End Date", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                checker = startTime.split(":| ");
+                try{
+                    if(Integer.parseInt(checker[0]) > 12 || Integer.parseInt(checker[0]) < 0 || Integer.parseInt(checker[1]) < 0 || Integer.parseInt(checker[1]) > 59 || (!checker[2].equalsIgnoreCase("am") && !checker[2].equalsIgnoreCase("pm"))){
+                        Toast.makeText(getBaseContext(), "Invalid Start Time", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+                catch(Exception e){
+                    Toast.makeText(getBaseContext(), "Invalid Start Time", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                checker = endTime.split(":| ");
+                try{
+                    if(Integer.parseInt(checker[0]) > 12 || Integer.parseInt(checker[0]) < 0 || Integer.parseInt(checker[1]) < 0 || Integer.parseInt(checker[1]) > 59 || (!checker[2].equalsIgnoreCase("am") && !checker[2].equalsIgnoreCase("pm"))){
+                        Toast.makeText(getBaseContext(), "Invalid End Time", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+                catch(Exception e){
+                    Toast.makeText(getBaseContext(), "Invalid End Time", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if(description.isEmpty()) description = "No Description";
                 if(location.isEmpty()) location = "Not Specified";
                 if(category.isEmpty()) category = "None";
