@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
  */
 public class Daily_View extends Activity {
 
+    Context context;
     Button viewsButton, searchButton, agendaButton, addButton, settingsButton;
     ListView list;
     ArrayList<String> items;
@@ -40,6 +42,7 @@ public class Daily_View extends Activity {
         setContentView(R.layout.activity_daily_view);
 
         Intent intent = getIntent();
+        context = this;
 
         datethingy = (EditText) findViewById(R.id.daily_date);
         list = (ListView)findViewById(R.id.eventList);
@@ -49,6 +52,8 @@ public class Daily_View extends Activity {
     }
 
     public void initializeDaily(EditText datethingy, Intent intent){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         String month, day, year;
         month = intent.getStringExtra(Monthly_View_Example.monthFinal);
         day = intent.getStringExtra(Monthly_View_Example.dayFinal);
@@ -78,21 +83,20 @@ public class Daily_View extends Activity {
             input.read(t);
 
             String[] response = new String(t).split("\n");
-            ArrayList<Button> eventList = new ArrayList<Button>();
+            ArrayList<String> eventList = new ArrayList<String>();
             items = new ArrayList<String>();
 
             for (String str : response) {
                 String[] others = str.split(",");
                 if(StringUtils.containsIgnoreCase(others[5], request)){
-                    Button added = new Button(this);
-                    added.setText(others[0] + " - " + others[3] + "-" + others[4]);
-                    eventList.add(added);
+                    String mes = (others[0] + " - " + others[3] + "-" + others[4]);
+                    eventList.add(mes);
                     items.add(str);
                 }
                 System.out.println(str);
             }
 
-            ArrayAdapter adapter = new ArrayAdapter<Button>(this, R.layout.row, eventList);
+            ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.row, eventList);
             list.setAdapter(adapter);
 
         }
@@ -118,6 +122,15 @@ public class Daily_View extends Activity {
                     Intent intent = new Intent(context, calendarEvent.class);
                     intent.putExtra("fileUri", fileUri.toString());
                     intent.putExtra("Event","");
+                    startActivity(intent);
+                }
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                if(view.getId() == R.id.search){
+                    Intent intent = new Intent(getBaseContext(), Search_View.class);
                     startActivity(intent);
                 }
             }
