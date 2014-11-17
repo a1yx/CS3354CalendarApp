@@ -74,6 +74,7 @@ public class Monthly_View_Example extends Activity {
         // here we set Monday as the first day of the Calendar
         calendar.setFirstDayOfWeek(2);
 
+
         //The background color for the selected week.
         //calendar.setSelectedWeekBackgroundColor(getResources().getColor(R.color.white));
 

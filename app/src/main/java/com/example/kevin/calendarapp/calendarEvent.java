@@ -279,9 +279,6 @@ public class calendarEvent extends Activity {
         writer.close();
         // Display a little bubble to notify the user of the save
         Toast.makeText(getBaseContext(), "Event Saved", Toast.LENGTH_LONG).show();
-        syncCalendar(0,uuid + "," + name + "," + description + "," + location +
-                "," + startTime + "," + endTime + "," + startDate + "," + endDate + "," + category);
-
     }
 
     public void editEvent(BufferedReader reader, File file)
@@ -339,14 +336,14 @@ public class calendarEvent extends Activity {
 		 */
         //Uses the Tokenizer class to separate the input line into the values
         uuid = tokenizer.next();
-        name = "1 " + tokenizer.next();
-        description = "1 " + tokenizer.next();
-        location = "1 " + tokenizer.next();
-        startTime = "1 " + tokenizer.next();
-        endTime = "1 " + tokenizer.next();
-        startDate = "1 " + tokenizer.next();
-        endDate = "1 " + tokenizer.next();
-        category = "1 " + tokenizer.next();
+        name = tokenizer.next();
+        description = tokenizer.next();
+        location = tokenizer.next();
+        startTime = tokenizer.next();
+        endTime = tokenizer.next();
+        startDate = tokenizer.next();
+        endDate = tokenizer.next();
+        category = tokenizer.next();
         reader.close();
     }
 
