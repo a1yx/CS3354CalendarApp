@@ -47,6 +47,9 @@ public class Daily_View extends Activity {
         context = this;
 
         datethingy = (EditText) findViewById(R.id.daily_date);
+
+        //Creates list for displaying and selecting events and an array list to keep track of which
+        //Event belongs to which list item
         list = (ListView)findViewById(R.id.eventList);
         items = new ArrayList<String>();
 
@@ -56,18 +59,23 @@ public class Daily_View extends Activity {
     public void initializeDaily(EditText datethingy, Intent intent){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         String month, day, year;
+
         month = intent.getStringExtra(Monthly_View_Example.monthFinal);
         day = intent.getStringExtra(Monthly_View_Example.dayFinal);
         year = intent.getStringExtra(Monthly_View_Example.yearFinal);
         datethingy.setText(month + " " + day + ", " + year);
 
+        //Gets a string readable by the server
         String request = (getMonth(month) + "/" + day + "/" + year);
 
+        //Generates the phone's unique ID
         String id = Build.BOARD + Build.BOOTLOADER + Build.ID + Build.SERIAL;
         id = new String(Hex.encodeHex(DigestUtils.sha(id)));
         String message = " DOWNLOAD," + id;
 
+        //Sends a message to the server, reads it, and puts all valid events in the list from earlier
         try {
             URL u = new URL("http://calendarse-maveptp.rhcloud.com/serv.j");
             URLConnection connection = u.openConnection();
