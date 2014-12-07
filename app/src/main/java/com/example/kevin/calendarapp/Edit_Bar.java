@@ -3,15 +3,18 @@ package com.example.kevin.calendarapp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.example.kevin.calendarapp.R;
 
 /**
  * Created by MacProJJ on 11/12/14.
  */
-public class Edit_Bar extends Activity{
-    Button view;
+public class Edit_Bar extends Activity implements OnItemSelectedListener{
+    Spinner view_spinner;
     Button search;
     Button agenda;
     Button add;
@@ -34,6 +37,18 @@ public class Edit_Bar extends Activity{
 //        view.setOnClickListener(this);
 
 
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+        Spinner spinner = (Spinner) findViewById(R.id.views_spinner);
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 
 

@@ -17,4 +17,11 @@
     <string name="startdate">Start Date (mm/dd/yyyy)</string>
     <string name="enddate">End Date (mm/dd/yyyy)</string>
 
+    <string-array name="view_array">
+        <item>Monthly</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Yearly</item>
+    </string-array>
+
 </resources>
