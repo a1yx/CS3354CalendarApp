@@ -14,6 +14,7 @@ package com.example.kevin.calendarapp;
         import android.widget.Button;
         import android.widget.CalendarView;
         import android.widget.CalendarView.OnDateChangeListener;
+        import android.widget.Spinner;
         import android.widget.Toast;
         import android.app.Activity;
 
@@ -22,7 +23,8 @@ package com.example.kevin.calendarapp;
 public class Monthly_View extends Activity {
     CalendarView calendar;
     Context context = this;
-    Button viewsButton, searchButton, agendaButton, addButton, settingsButton;
+    Spinner view;
+    Button searchButton, agendaButton, addButton, settingsButton;
     public final static String monthFinal = "com.example.kevin.calendarap.monthString";
     public final static String dayFinal = "com.example.kevin.calendarapp.dayString";
     public final static String yearFinal = "com.example.kevin.calendarapp.yearString";
@@ -101,7 +103,7 @@ public class Monthly_View extends Activity {
 
     public void initializeEditBar() {
         final Context context = this;
-        viewsButton = (Button) findViewById(R.id.change_views);
+        view = (Spinner) findViewById(R.id.views_spinner);
         searchButton = (Button) findViewById(R.id.search);
         agendaButton = (Button) findViewById(R.id.agenda);
         addButton = (Button) findViewById(R.id.add_event);

@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -31,7 +32,8 @@ import java.util.ArrayList;
 public class Daily_View extends Activity {
 
     Context context;
-    Button viewsButton, searchButton, agendaButton, addButton, settingsButton;
+    Spinner views;
+    Button searchButton, agendaButton, addButton, settingsButton;
     ListView list;
     ArrayList<String> items;
     EditText datethingy;
@@ -62,9 +64,9 @@ public class Daily_View extends Activity {
 
         String month, day, year;
 
-        month = intent.getStringExtra(Monthly_View_Example.monthFinal);
-        day = intent.getStringExtra(Monthly_View_Example.dayFinal);
-        year = intent.getStringExtra(Monthly_View_Example.yearFinal);
+        month = intent.getStringExtra(Monthly_View.monthFinal);
+        day = intent.getStringExtra(Monthly_View.dayFinal);
+        year = intent.getStringExtra(Monthly_View.yearFinal);
         datethingy.setText(month + " " + day + ", " + year);
 
         //Gets a string readable by the server
@@ -124,7 +126,7 @@ public class Daily_View extends Activity {
     public void initializeEditBar(Intent intent) {
         final Context context = this;
         final Uri fileUri = Uri.parse(intent.getExtras().getString("fileUri"));
-        viewsButton = (Button) findViewById(R.id.change_views);
+        views = (Spinner) findViewById(R.id.views_spinner);
         searchButton = (Button) findViewById(R.id.search);
         agendaButton = (Button) findViewById(R.id.agenda);
         addButton = (Button) findViewById(R.id.add_event);
