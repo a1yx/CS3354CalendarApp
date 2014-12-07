@@ -19,7 +19,7 @@ package com.example.kevin.calendarapp;
 
         import java.io.File;
 
-public class Monthly_View_Example extends Activity {
+public class Monthly_View extends Activity {
     CalendarView calendar;
     Context context = this;
     Button viewsButton, searchButton, agendaButton, addButton, settingsButton;
@@ -74,20 +74,6 @@ public class Monthly_View_Example extends Activity {
         // here we set Monday as the first day of the Calendar
         calendar.setFirstDayOfWeek(2);
 
-
-        //The background color for the selected week.
-        //calendar.setSelectedWeekBackgroundColor(getResources().getColor(R.color.white));
-
-        //sets the color for the dates of an unfocused month.
-        //calendar.setUnfocusedMonthDateColor(getResources().getColor(R.color.transparent));
-
-        //sets the color for the separator line between weeks.
-        //calendar.setWeekSeparatorLineColor(getResources().getColor(R.color.transparent));
-
-        //sets the color for the vertical bar shown at the beginning and at the end of the selected date.
-        //calendar.setSelectedDateVerticalBar(R.color.pink);
-
-        //**This has an OBOB error for month (month is month -1) -- gauche fix
         //sets the listener to be notified upon selected date change.
         calendar.setOnDateChangeListener(new OnDateChangeListener() {
             //show the selected date as a toast and pass as intent
