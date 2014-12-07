@@ -33,6 +33,13 @@ import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.UUID;
 
+/*
+ * Contains all the information and functions of the events
+ * includes creating, editing, and removing events
+ *
+ * @author Kevin Szwagiel, Garth Gulickson
+ */
+
 public class calendarEvent extends Activity {
 	
 	// Set up all default values
@@ -44,6 +51,13 @@ public class calendarEvent extends Activity {
 	long calID, eventID, startLong, endLong;
     int kind;
 
+    /*
+     * Handles the event when it is created.
+     * Creates all the buttons and creates listeners for each button.
+     * Validates input for each field
+     *
+     * @param
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -205,53 +219,6 @@ public class calendarEvent extends Activity {
                         "," + startTime + "," + endTime + "," + startDate + "," + endDate + "," + category);
 
                 calendarEvent.this.finish();
-
-				/*
-				 * This uses the calendar provider directly. uncomment to test
-				 *
-				ContentResolver cr = getContentResolver();
-				ContentValues eventValues = new ContentValues();
-				eventValues.put(Events.DTSTART, startLong);
-				eventValues.put(Events.DTEND, endLong);
-				eventValues.put(Events.TITLE, "Jazzercise");
-				eventValues.put(Events.DESCRIPTION, "Group workout");
-				eventValues.put(Events.CALENDAR_ID, calID);
-				eventValues.put(Events.EVENT_TIMEZONE, "America/Los_Angeles");
-				Uri uri = cr.insert(Events.CONTENT_URI, eventValues);
-				eventID = Long.parseLong(uri.getLastPathSegment());
-
-				uri = ContentUris.withAppendedId(Events.CONTENT_URI, eventID);
-				Intent intent = new Intent(Intent.ACTION_VIEW)
-				   .setData(uri);
-				startActivity(intent);
-				///////////////////////////////////////////////////////////////////
-				*
-				* This uses the calendar provider using intents. uncomment to test
-				*
-				name = (EditText)findViewById(R.id.editText1);
-				description = (EditText)findViewById(R.id.editText1);
-				location = (EditText)findViewById(R.id.editText1);
-				//startTime = (EditText)findViewById(R.id.editText1);
-				//endTime = (EditText)findViewById(R.id.editText1);
-				startDate = (EditText)findViewById(R.id.editText1);
-				endDate = (EditText)findViewById(R.id.editText1);
-				category = (EditText)findViewById(R.id.editText1);
-
-				Intent intent = new Intent(Intent.ACTION_INSERT)
-					.setData(Events.CONTENT_URI)
-					.putExtra(Events.TITLE, name.getText().toString())
-					.putExtra(Events.DESCRIPTION, description.getText().toString())
-					.putExtra(Events.EVENT_LOCATION, location.getText().toString());
-				startActivity(intent);
-
-
-				Uri uri = ContentUris.withAppendedId(Events.CONTENT_URI, eventID);
-				Intent intent2 = new Intent(Intent.ACTION_VIEW)
-				   .setData(uri);
-				startActivity(intent);
-			}
-		});
-		*/
 			}
 		});
 

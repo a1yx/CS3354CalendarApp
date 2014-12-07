@@ -1,5 +1,11 @@
 package com.example.kevin.calendarapp;
 
+/*
+ * Takes in a string and will split it into parts
+ * based on the delimeter specified
+ *
+ * @author Kevin Szwagiel
+ */
 public class Tokenizer {
 	private String string;
 	private String token;
@@ -31,7 +37,12 @@ public class Tokenizer {
 		string = istring;
 	}
 	
-	// Read in and return the next token, stopping at delimiter or end of file
+	/*
+	 * The main function. Will read a string up to the delimeter.
+	 * Removes the part of the string that was read
+	 *
+	 * @return The string up to the next delimeter
+	 */
 	public String next() {
 		token = "";
 		
