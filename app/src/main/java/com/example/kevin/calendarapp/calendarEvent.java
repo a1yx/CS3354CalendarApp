@@ -56,7 +56,9 @@ public class calendarEvent extends Activity {
      * Creates all the buttons and creates listeners for each button.
      * Validates input for each field
      *
-     * @param
+     * @param intent contains information of an event, if an event exists
+     * @exception e catches any exception that occurs during input validation
+     * @exception e catches IOException and FileNotFoundException for file IO
      */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -236,6 +238,13 @@ public class calendarEvent extends Activity {
 		getMenuInflater().inflate(R.menu.menu_calendar_event, menu);
 		return true;
 	}
+
+    /*
+     * Creates a new event and writes it to a file
+     *
+     * @param writer The output stream that will write to a file
+     * @exception IOException Thrown if IO fails
+     */
     public void newEvent(OutputStreamWriter writer) throws IOException {
         // Write all values to a csv file. Separated for readability
         uuid = UUID.randomUUID().toString();
@@ -248,6 +257,13 @@ public class calendarEvent extends Activity {
         Toast.makeText(getBaseContext(), "Event Saved", Toast.LENGTH_LONG).show();
     }
 
+    /*
+     * Edits an event. Takes in an existing event and finds that event in the file.
+     * It copies every line to a new file and only replaces the line that is different.
+     * @param reader The file stream that will be read by the function
+     * @param file The file that is being read. Used to change pointers.
+     * @exception IOException Thrown if any IO operations fail
+     */
     public void editEvent(BufferedReader reader, File file)
             throws IOException {
         // Write all values to a csv file. Separated for readability
@@ -292,6 +308,15 @@ public class calendarEvent extends Activity {
         tempFile.delete();
     }
 
+    /*
+     * @deprecated Since jdk 1.1. This function was used for debugging.
+     *
+     * Reads the file to pull data about the event. This is for offline use.
+     * This is used to display event details
+     *
+     * @param reader The file stream to read input
+     * @exception IOException Thrown if an IO operation fails
+     */
     public void fileRead(BufferedReader reader) throws IOException {
         String line;
         line = reader.readLine();

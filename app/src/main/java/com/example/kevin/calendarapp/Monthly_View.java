@@ -74,7 +74,7 @@ public class Monthly_View extends Activity {
 
         // sets the first day of week according to Calendar.
         // here we set Monday as the first day of the Calendar
-        calendar.setFirstDayOfWeek(2);
+        calendar.setFirstDayOfWeek(1);
 
         //sets the listener to be notified upon selected date change.
         calendar.setOnDateChangeListener(new OnDateChangeListener() {
