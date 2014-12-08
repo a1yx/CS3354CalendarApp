@@ -6,7 +6,8 @@
     <include
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        layout="@layout/edit_bar_constant" />
+        layout="@layout/edit_bar_constant"
+        android:id="@+id/editbar" />
 
     <EditText
         android:layout_width="match_parent"

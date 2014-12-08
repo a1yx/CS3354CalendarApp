@@ -5,7 +5,7 @@
 
     <Spinner
         android:id="@+id/views_spinner"
-        android:layout_width="84dp"
+        android:layout_width="74dp"
         android:layout_height="wrap_content"
         android:entries="@array/view_array"
         android:spinnerMode="dropdown" />
