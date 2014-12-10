@@ -33,9 +33,11 @@ import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.UUID;
 
-/*
- * Contains all the information and functions of the events
- * includes creating, editing, and removing events
+/**
+ * Contains all the information and functions of the events.
+ * Includes creating, editing, and removing events.
+ * Sets up all the buttons and listeners for the event.
+ * Validates all input fields
  *
  * @author Kevin Szwagiel, Garth Gulickson
  */
@@ -51,7 +53,7 @@ public class calendarEvent extends Activity {
 	long calID, eventID, startLong, endLong;
     int kind;
 
-    /*
+    /**
      * Handles the event when it is created.
      * Creates all the buttons and creates listeners for each button.
      * Validates input for each field
@@ -239,7 +241,7 @@ public class calendarEvent extends Activity {
 		return true;
 	}
 
-    /*
+    /**
      * Creates a new event and writes it to a file
      *
      * @param writer The output stream that will write to a file
@@ -257,9 +259,10 @@ public class calendarEvent extends Activity {
         Toast.makeText(getBaseContext(), "Event Saved", Toast.LENGTH_LONG).show();
     }
 
-    /*
+    /**
      * Edits an event. Takes in an existing event and finds that event in the file.
      * It copies every line to a new file and only replaces the line that is different.
+     *
      * @param reader The file stream that will be read by the function
      * @param file The file that is being read. Used to change pointers.
      * @exception IOException Thrown if any IO operations fail
@@ -308,7 +311,7 @@ public class calendarEvent extends Activity {
         tempFile.delete();
     }
 
-    /*
+    /**
      * @deprecated Since jdk 1.1. This function was used for debugging.
      *
      * Reads the file to pull data about the event. This is for offline use.

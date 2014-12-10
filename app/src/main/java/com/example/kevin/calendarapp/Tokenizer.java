@@ -1,6 +1,6 @@
 package com.example.kevin.calendarapp;
 
-/*
+/**
  * Takes in a string and will split it into parts
  * based on the delimeter specified
  *
@@ -37,7 +37,7 @@ public class Tokenizer {
 		string = istring;
 	}
 	
-	/*
+	/**
 	 * The main function. Will read a string up to the delimeter.
 	 * Removes the part of the string that was read
 	 *
