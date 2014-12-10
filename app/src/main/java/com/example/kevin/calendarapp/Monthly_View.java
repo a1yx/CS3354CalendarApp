@@ -131,7 +131,14 @@ public class Monthly_View extends Activity {
         });
     }
 
-    // Switch statement to convert the int value of a month to a string
+    /**
+     * This method is a collection of switch statements.
+     * The switch statements take an integer value for the month
+     * and convert it to a string representation of the month.
+     * 
+     * @param month
+     * @return monthString
+     */
     public String Months(int month) {
         String monthString = "";
         switch(month) {
