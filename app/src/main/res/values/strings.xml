@@ -22,10 +22,7 @@
 
     <string-array name="view_array">
         <item>Monthly</item>
-<<<<<<< Updated upstream
-=======
         <item>Weekly</item>
->>>>>>> Stashed changes
         <item>Daily</item>
     </string-array>
 
