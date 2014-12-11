@@ -3,6 +3,7 @@ package com.example.kevin.calendarapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -36,7 +38,7 @@ public class Daily_View extends Activity {
     Button searchButton, agendaButton, addButton, settingsButton;
     ListView list;
     ArrayList<String> items;
-    EditText datethingy;
+    TextView datethingy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class Daily_View extends Activity {
         Intent intent = getIntent();
         context = this;
 
-        datethingy = (EditText) findViewById(R.id.daily_date);
+        datethingy = (TextView) findViewById(R.id.daily_date);
 
         //Creates list for displaying and selecting events and an array list to keep track of which
         //Event belongs to which list item
@@ -58,7 +60,17 @@ public class Daily_View extends Activity {
         initializeDaily(datethingy, intent);
     }
 
-    public void initializeDaily(EditText datethingy, Intent intent){
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Intent weeklyIntent = new Intent(context, Weekly_View.class);
+            startActivity(weeklyIntent);
+        }
+    }
+
+    public void initializeDaily(TextView datethingy, Intent intent){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 

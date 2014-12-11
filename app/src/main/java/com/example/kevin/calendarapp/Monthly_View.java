@@ -6,6 +6,7 @@ package com.example.kevin.calendarapp;
 
         import android.content.Context;
         import android.content.Intent;
+        import android.content.res.Configuration;
         import android.net.Uri;
         import android.os.Bundle;
         import android.view.Menu;
@@ -17,7 +18,6 @@ package com.example.kevin.calendarapp;
         import android.widget.Spinner;
         import android.widget.Toast;
         import android.app.Activity;
-
         import java.io.File;
 
 public class Monthly_View extends Activity {
@@ -41,7 +41,18 @@ public class Monthly_View extends Activity {
         //initializes the calendarview
         file = new File(context.getFilesDir(), "calendar.csv");
         fileUri = Uri.fromFile(file);
+
         initializeCalendar();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Intent weeklyIntent = new Intent(context, Weekly_View.class);
+            startActivity(weeklyIntent);
+        }
     }
 
     @Override
@@ -102,7 +113,7 @@ public class Monthly_View extends Activity {
     }
 
     public void initializeEditBar() {
-        final Context context = this;
+        final Context contextEditBar = this;
         view = (Spinner) findViewById(R.id.views_spinner);
         searchButton = (Button) findViewById(R.id.search);
         agendaButton = (Button) findViewById(R.id.agenda);
@@ -113,7 +124,7 @@ public class Monthly_View extends Activity {
             @Override
             public void onClick(View view) {
                 if(view.getId() == R.id.add_event) {
-                    Intent intent = new Intent(context, calendarEvent.class);
+                    Intent intent = new Intent(contextEditBar, calendarEvent.class);
                     intent.putExtra("fileUri", fileUri.toString());
                     intent.putExtra("Event","");
                     startActivity(intent);

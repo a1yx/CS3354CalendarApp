@@ -9,14 +9,12 @@
         layout="@layout/edit_bar_constant"
         android:id="@+id/editbar" />
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/daily_date"
-        android:clickable="false"
-        android:editable="false"/>
+        android:textSize="20dp"
+        android:gravity="center"
+        android:id="@+id/daily_date"/>
 
     <ListView
         android:layout_width="match_parent"
