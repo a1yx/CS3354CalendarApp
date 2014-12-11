@@ -29,12 +29,34 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Categories"
-            android:id="@+id/submit_button"
+            android:text="Search"
+            android:id="@+id/search"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_gravity="right" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:id="@+id/add"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_gravity="right" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:id="@+id/delete"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_gravity="right" />
+
     </LinearLayout>
+
 
     <ListView
         android:layout_width="match_parent"
