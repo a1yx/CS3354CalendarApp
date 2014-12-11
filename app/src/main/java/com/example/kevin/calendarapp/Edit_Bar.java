@@ -11,8 +11,9 @@ import android.widget.Spinner;
 /**
  * Created by MacProJJ on 11/12/14.
  */
-public class Edit_Bar extends Activity implements OnItemSelectedListener{
-    Spinner view_spinner;
+public class Edit_Bar extends Activity /*implements OnItemSelectedListener*/{
+//    Spinner view_spinner;
+    Button view;
     Button search;
     Button agenda;
     Button add;
@@ -38,17 +39,17 @@ public class Edit_Bar extends Activity implements OnItemSelectedListener{
 
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-        Spinner spinner = (Spinner) findViewById(R.id.views_spinner);
-        spinner.setOnItemSelectedListener(this);
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    }
+//    public void onItemSelected(AdapterView<?> parent, View view,
+//                               int pos, long id) {
+//        // An item was selected. You can retrieve the selected item using
+//        // parent.getItemAtPosition(pos)
+//        Spinner spinner = (Spinner) findViewById(R.id.views_spinner);
+//        spinner.setOnItemSelectedListener(this);
+//    }
+//
+//    public void onNothingSelected(AdapterView<?> parent) {
+//        // Another interface callback
+//    }
 
 
 }
