@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,7 +31,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -172,6 +175,13 @@ public class calendarEvent extends Activity {
                 if(endTime.isEmpty()){((EditText)findViewById(R.id.endTime_edit)).setText("End Time Required".toCharArray(),0,17); return; }
                 if(startDate.isEmpty()){((EditText) findViewById(R.id.startDate_edit)).setText("Start Date Required".toCharArray(),0,19); return; }
                 if(endDate.isEmpty()){((EditText)findViewById(R.id.endDate_edit)).setText("End Date Required".toCharArray(),0,17); return; }
+
+                String conf = checkConflicts();
+
+                if(conf != null){
+                    Toast.makeText(getBaseContext(), "Time Conflict With: " + conf, Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 // Adds an event to calendar.csv
                 if(uuid.isEmpty()) {
@@ -423,5 +433,74 @@ public class calendarEvent extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String checkConflicts(){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        Date initialDate = null, endingDate = null;
+        try {
+            initialDate = sdf.parse(startDate + " " + startTime);
+            endingDate = sdf.parse(endDate + " " + endTime);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        String id = Build.BOARD + Build.BOOTLOADER + Build.ID + Build.SERIAL;
+        id = new String(Hex.encodeHex(DigestUtils.sha(id)));
+        String message = " DOWNLOAD," + id;
+
+        //Sends a message to the server, reads it, and puts all valid events in the list from earlier
+        try {
+            URL u = new URL("http://calendarse-maveptp.rhcloud.com/serv.j");
+            URLConnection connection = u.openConnection();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            OutputStream output = connection.getOutputStream();
+            byte[] t = null;
+
+            output.write(message.getBytes());
+            output.close();
+
+            InputStream input = connection.getInputStream();
+            t = new byte[input.available()];
+            input.read(t);
+
+            String[] response = new String(t).split("\n");
+
+            for (String str : response) {
+
+                String[] others = str.split(",");
+                String resp = others[5] + " " + others[3];
+                Date checkThis = sdf.parse(resp);
+                if(checkThis.after(initialDate) && checkThis.before(endingDate)){
+                    return others[2];
+                }
+            }
+            return null;
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getMonth(String m){
+        if(m.equals("January")) return "1";
+        if(m.equals("February")) return "2";
+        if(m.equals("March")) return "3";
+        if(m.equals("April")) return "4";
+        if(m.equals("May")) return "5";
+        if(m.equals("June")) return "6";
+        if(m.equals("July")) return "7";
+        if(m.equals("August")) return "8";
+        if(m.equals("September")) return "9";
+        if(m.equals("October")) return "10";
+        if(m.equals("November")) return "11";
+        else{ return "12"; }
     }
 }
