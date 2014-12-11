@@ -24,6 +24,13 @@ package com.example.kevin.calendarapp;
         import java.text.SimpleDateFormat;
         import java.util.Calendar;
 
+/**
+ * Creates the monthly view using CalendarView. Adds buttons from the edit bar.
+ * Adds listeners for orientation change and date selection.
+ * Creates strings that contain date information that is then passed onto other activities.
+ *
+ * @author Kevin Szwagiel, Jennifer Jiang
+ */
 public class Monthly_View extends Activity {
     CalendarView calendar;
     Context context = this;
