@@ -61,6 +61,7 @@ public class calendarEvent extends Activity {
      * Creates all the buttons and creates listeners for each button.
      * Validates input for each field
      *
+     * @author Kevin Szwagiel, Garth Gulickson
      * @param intent contains information of an event, if an event exists
      * @exception e catches any exception that occurs during input validation
      * @exception e catches IOException and FileNotFoundException for file IO
@@ -254,6 +255,7 @@ public class calendarEvent extends Activity {
     /**
      * Creates a new event and writes it to a file
      *
+     * @author Kevin Szwagiel
      * @param writer The output stream that will write to a file
      * @exception IOException Thrown if IO fails
      */
@@ -273,6 +275,7 @@ public class calendarEvent extends Activity {
      * Edits an event. Takes in an existing event and finds that event in the file.
      * It copies every line to a new file and only replaces the line that is different.
      *
+     * @author Kevin Szwagiel
      * @param reader The file stream that will be read by the function
      * @param file The file that is being read. Used to change pointers.
      * @exception IOException Thrown if any IO operations fail
@@ -327,6 +330,7 @@ public class calendarEvent extends Activity {
      * Reads the file to pull data about the event. This is for offline use.
      * This is used to display event details
      *
+     * @author Kevin Szwagiel
      * @param reader The file stream to read input
      * @exception IOException Thrown if an IO operation fails
      */

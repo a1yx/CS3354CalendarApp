@@ -12,7 +12,7 @@ import android.view.MenuItem;
  * This activity displays the weekly view. Switching orientation back to portrait
  * will cause the application to return to its previous activity.
  *
- * @author Kevin
+ * @author Kevin Szwagiel
  */
 public class Weekly_View extends Activity {
     Context context = this;

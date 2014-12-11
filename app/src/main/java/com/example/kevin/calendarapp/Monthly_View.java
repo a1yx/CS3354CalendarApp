@@ -116,6 +116,12 @@ public class Monthly_View extends Activity {
 
     }
 
+    /**
+     * Initializes the Edit Bar at the top of the view. It adds the spinner and three buttons.
+     * These buttons and spinners will take you to the activities associated with them.
+     *
+     * @author Kevin Szwagiel
+     */
     public void initializeEditBar() {
         final Context contextEditBar = this;
         view = (Spinner) findViewById(R.id.views_spinner);

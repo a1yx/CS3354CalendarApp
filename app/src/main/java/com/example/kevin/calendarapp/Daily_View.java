@@ -137,6 +137,12 @@ public class Daily_View extends Activity {
         initializeEditBar(intent);
     }
 
+    /**
+     * Initializes the Edit Bar at the top of the view. It adds the spinner and three buttons.
+     * These buttons and spinners will take you to the activities associated with them.
+     *
+     * @param intent This intent holds date information from the monthly view. Default is current date.
+     */
     public void initializeEditBar(Intent intent) {
         final Context context = this;
         final Uri fileUri = Uri.parse(intent.getExtras().getString("fileUri"));
