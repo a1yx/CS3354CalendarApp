@@ -24,7 +24,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
- * Created by garth_000 on 11/16/2014.
+ * @author Garth Gulickson
  */
 public class Search_View extends Activity{
 
@@ -63,6 +63,10 @@ public class Search_View extends Activity{
 
     }
 
+    /**
+     *
+     * @param intent
+     */
     public void initializeSearch(Intent intent){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

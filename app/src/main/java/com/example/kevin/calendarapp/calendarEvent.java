@@ -368,6 +368,11 @@ public class calendarEvent extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+    /**
+     * @author Garth Gulickson
+     * @param type The type of sync being done, can be 0 1 or 2 for add, edit or delete, determines what is sent to the server
+     * @param s Holds the string form of the event to added, edited or deleted
+     */
     public void syncCalendar(int type, String s) {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -438,6 +443,10 @@ public class calendarEvent extends Activity {
         }
     }
 
+    /**
+     * @author Garth Gulickson
+     * @return returns the name of the first event with a potential conflict
+     */
     public String checkConflicts(){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -492,6 +501,11 @@ public class calendarEvent extends Activity {
         }
     }
 
+    /**
+     * @author Garth Gulickson
+     * @param m The Month passed in as a string
+     * @return The numerical form of the month passed in
+     */
     public String getMonth(String m){
         if(m.equals("January")) return "1";
         if(m.equals("February")) return "2";

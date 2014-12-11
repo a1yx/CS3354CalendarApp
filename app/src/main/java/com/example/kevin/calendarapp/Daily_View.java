@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Created by MacProJJ on 11/12/14.
+ * @author Garth Gulickson
  */
 public class Daily_View extends Activity {
 
@@ -72,6 +71,11 @@ public class Daily_View extends Activity {
         }
     }
 
+    /**
+     * @author Garth Gulickson
+     * @param datethingy Sets text that's currently selected
+     * @param intent Main intent
+     */
     public void initializeDaily(TextView datethingy, Intent intent){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -215,6 +219,11 @@ public class Daily_View extends Activity {
         });
     }
 
+    /**
+     * @author Garth Gulickson
+     * @param m Month in string form
+     * @return Returns the numerical version of the month between 1 and 12
+     */
     public String getMonth(String m){
         if(m.equals("January")) return "1";
         if(m.equals("February")) return "2";
