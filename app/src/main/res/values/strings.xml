@@ -20,8 +20,6 @@
     <string-array name="view_array">
         <item>Monthly</item>
         <item>Daily</item>
-        <item>Weekly</item>
-        <item>Yearly</item>
     </string-array>
 
 </resources>

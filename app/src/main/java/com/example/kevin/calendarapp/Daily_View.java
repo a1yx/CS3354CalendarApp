@@ -26,7 +26,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by MacProJJ on 11/12/14.
@@ -143,6 +145,38 @@ public class Daily_View extends Activity {
         agendaButton = (Button) findViewById(R.id.agenda);
         addButton = (Button) findViewById(R.id.add_event);
         settingsButton = (Button) findViewById(R.id.settings);
+
+        ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this,
+                R.array.view_array, android.R.layout.simple_spinner_item);
+
+        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        views.setAdapter(spinAdapter);
+
+        views.setSelection(spinAdapter.getPosition("Daily"));
+
+        views.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                Object item = adapterView.getItemAtPosition(pos);
+                Calendar date = Calendar.getInstance();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+
+                String curDate = sdf.format(date.getTime());
+                String[] curDateArr = curDate.split("-");
+
+                if(item.toString().compareTo("Monthly") == 0) {
+                    Intent intent = new Intent(context, Monthly_View.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

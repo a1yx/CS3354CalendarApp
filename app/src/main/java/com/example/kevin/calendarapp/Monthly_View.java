@@ -12,6 +12,8 @@ package com.example.kevin.calendarapp;
         import android.view.Menu;
         import android.view.MenuItem;
         import android.view.View;
+        import android.widget.AdapterView;
+        import android.widget.ArrayAdapter;
         import android.widget.Button;
         import android.widget.CalendarView;
         import android.widget.CalendarView.OnDateChangeListener;
@@ -19,6 +21,8 @@ package com.example.kevin.calendarapp;
         import android.widget.Toast;
         import android.app.Activity;
         import java.io.File;
+        import java.text.SimpleDateFormat;
+        import java.util.Calendar;
 
 public class Monthly_View extends Activity {
     CalendarView calendar;
@@ -115,6 +119,46 @@ public class Monthly_View extends Activity {
     public void initializeEditBar() {
         final Context contextEditBar = this;
         view = (Spinner) findViewById(R.id.views_spinner);
+
+        ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this,
+                R.array.view_array, android.R.layout.simple_spinner_item);
+
+        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        view.setAdapter(spinAdapter);
+
+        view.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                Object item = adapterView.getItemAtPosition(pos);
+                Calendar date = Calendar.getInstance();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+
+                String curDate = sdf.format(date.getTime());
+                String[] curDateArr = curDate.split("-");
+
+                if(item.toString().compareTo("Daily") == 0) {
+                    Context context = calendar.getContext();
+                    Intent intent = new Intent(context, Daily_View.class);
+                    String monthString = Months(Integer.parseInt(curDateArr[0]));
+                    intent.putExtra(monthFinal, monthString);
+                    String dayString = curDateArr[1];
+                    intent.putExtra(dayFinal, dayString);
+                    String yearString = curDateArr[2];
+                    intent.putExtra(yearFinal, yearString);
+                    intent.putExtra("fileUri", fileUri.toString());
+
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         searchButton = (Button) findViewById(R.id.search);
         agendaButton = (Button) findViewById(R.id.agenda);
         addButton = (Button) findViewById(R.id.add_event);
