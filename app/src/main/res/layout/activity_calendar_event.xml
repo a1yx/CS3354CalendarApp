@@ -129,7 +129,7 @@
 
         </TableRow>
 
-            <TableRow
+        <TableRow
             android:id="@+id/startDateRow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
 
         </TableRow>
 
-            <TableRow
+        <TableRow
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

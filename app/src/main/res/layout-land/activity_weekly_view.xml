@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,79 +10,5 @@
         android:layout_height="wrap_content"
         layout="@layout/edit_bar_constant" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/textView" />
 
-    <HorizontalScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/horizontalScrollView" >
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="fill_parent">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Event 1"
-                    android:id="@+id/event1" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Event 2"
-                    android:id="@+id/event2" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="fill_parent">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Event 3"
-                    android:id="@+id/event3" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="fill_parent"></LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="fill_parent"></LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="fill_parent"></LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="fill_parent"></LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="fill_parent"></LinearLayout>
-
-
-        </LinearLayout>
-    </HorizontalScrollView>
-
-
-</LinearLayout>
+</RelativeLayout>

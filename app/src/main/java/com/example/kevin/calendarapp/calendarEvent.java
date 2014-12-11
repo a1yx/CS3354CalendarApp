@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -46,10 +45,10 @@ import java.util.UUID;
  */
 
 public class calendarEvent extends Activity {
-	
+
 	// Set up all default values
     private static Context context;
-	Button submitButton, cancelButton, deleteButton;
+    Button submitButton, cancelButton, deleteButton;
 	String uuid = "", name, description, location, startTime, endTime, startDate, endDate, category;
 	TextView random;
 	Calendar beginEvent, endEvent;
